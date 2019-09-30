@@ -20,31 +20,10 @@
   names:
     28-0316544480ff : Vloer Temperatuur  
 
-# - platform: p2000
-#   regios: 20
-#   disciplines: 1,2,3,4
-#   radius: 15000
-#   scan_interval: 20
-  
-# - platform: p2000
-#   name: Prinsenbeek
-#   regios: 20
-#   disciplines: 1,2,3,4
-#   radius: 1000
-#   scan_interval: 10
-#   latitude: 51.596499
-#   longitude: 4.704773
-
-# - platform: mijnafvalwijzer
-#   postcode: '4841JX'
-#   huisnummer: '9'
-#   toevoeging: ''
-#   label_geen: 'Geen'
-
 - platform: afvalwijzer
   url: 'mijnafvalwijzer.nl'
-  postcode: '4841JX'
-  huisnummer: '9'
+  postcode: !secret postcode
+  huisnummer: !secret huisnummer
   toevoeging: ''
   label_geen: 'Geen'
 
