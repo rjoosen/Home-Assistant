@@ -1,0 +1,174 @@
+homeassistant:
+  # Name of the location where Home Assistant is running
+  name: Home
+  # Location required to calculate the time the sun rises and sets
+  latitude: !secret latitude
+  longitude: !secret longitude
+
+  # Impacts weather/sunrise data (altitude above sea level in meters)
+  elevation: 0
+  # metric for Metric, imperial for Imperial
+  unit_system: metric
+  # Pick yours from here: http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+  time_zone: Europe/Amsterdam
+  # Customization file
+  customize: !include customize.yaml
+  auth_providers:
+    - type: homeassistant
+    - type: legacy_api_password
+      api_password: !secret legacy_password
+
+  whitelist_external_dirs:
+    - /tmp
+
+# Show links to resources in log and frontend
+# introduction:
+
+# Enables the frontend
+frontend:
+
+# Enables configuration UI
+config:
+
+# Uncomment this if you are using SSL/TLS, running in Docker container, etc.
+# http:
+#   base_url: example.duckdns.org:8123
+
+# Checks for available updates
+# Note: This component will send some information about your system to
+# the developers to assist with development of Home Assistant.
+# For more information, please see:
+# https://home-assistant.io/blog/2016/10/25/explaining-the-updater/
+
+updater:
+  # Optional, allows Home Assistant developers to focus on popular components.
+  # include_used_components: true
+
+# Discover some devices automatically
+# discovery:
+
+
+# Allows you to issue voice commands from the frontend in enabled browsers
+conversation:
+
+# Enables support for tracking state changes over time
+history:
+
+# View all events in a logbook
+logbook:
+
+# Enables a map showing the location of tracked devices
+map:
+
+# Track the sun
+sun:
+
+weather:
+  - platform: buienradar
+    latitude: !secret latitude
+    longitude: !secret longitude
+    forecast: true
+
+# Sensors
+#sensor:
+  # Weather prediction
+  # - platform: yr
+
+  # - platform: onewire
+  #   names:
+  #     28-0316544480ff : Vloer Temperatuur  
+
+# Text to speech
+# tts:
+#   - platform: google_translate
+#     service_name: google_say
+
+# Cloud
+cloud:
+
+logger:
+  default: critical
+  logs:
+    homeassistant.components.http.ban: warning
+
+group: !include groups.yaml
+automation: !include automations.yaml
+script: !include scripts.yaml
+switch: !include switch.yaml
+device_tracker: !include device-tracker.yaml
+sensor: !include sensors.yaml
+
+media_player:
+- platform: ziggo_mediabox_xl
+  host: 192.168.1.223
+  name: Ziggo Mediabox
+- platform: ziggo_mediabox_xl
+  host: 192.168.1.222
+  name: Ziggo Mediabox1
+- platform: kodi
+  host: 192.168.1.160
+  name: MyKodi
+- platform: yamaha_musiccast
+  host: 192.168.1.107
+  port: 5003
+- platform: yamaha_musiccast
+  host: 192.168.1.108
+  port: 5004
+- platform: yamaha_musiccast
+  host: 192.168.1.109
+  port: 5005
+  
+pilight:
+  host: 127.0.0.1
+  port: 5000
+
+light:
+  - platform: switch
+    name: Halogeen
+    entity_id: switch.Halogeen
+  - platform: switch
+    name: Lampje
+    entity_id: switch.lampje
+  - platform: switch
+    name: Ikealamp
+    entity_id: switch.ikealamp
+  
+mqtt:
+  broker: m24.cloudmqtt.com
+  port: 17893
+  username: !secret mqtt_user
+  password: !secret mqtt_pass
+
+
+binary_sensor:
+  - platform: mqtt
+    name: "Oprit Motion"
+    state_topic: "webcam/oprit/motion"
+    device_class: motion
+
+camera :
+  - platform: mjpeg
+    name: UpstairsCamera
+    mjpeg_url: http://192.168.1.112:8081
+    username: admin
+
+notify:
+  - name: RobsTelefoon
+    platform: pushbullet
+    api_key: !secret pushbullet_api
+  
+  - name: KodiNotify
+    platform: kodi
+    host: 192.168.1.160
+    port: 8080
+    username: kodi
+    password: kodi
+
+system_health:
+person:
+
+rest_command:
+  trigger_snapshot_oprit:
+    url: !secret oprit_trigger
+
+stream:

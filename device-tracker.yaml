@@ -1,0 +1,25 @@
+- platform: ping
+  interval_seconds: 30
+  hosts: 
+    Jonas: 192.168.1.100
+    Kodi: 192.168.1.160
+    Wouter: 192.168.1.105
+    iPhone_Loes: 192.168.1.152
+    Marloes: 192.168.1.100
+    LaptopWoonkamer: 192.168.1.103
+    Isabel: 192.168.1.104
+    Berend: 192.168.1.106
+    Rob: 192.168.1.102
+    MobBerend: 192.168.1.150
+    MobRob: 192.168.1.151
+    Horizonbox: 192.168.1.222
+    Soundbar: 192.168.1.107
+    Google_Home: 192.168.1.153
+    Printer: 192.168.1.135
+    Webcam: 192.168.1.112
+    KitchenSpeaker: 192.168.1.108
+    StudySpeaker: 192.168.1.109
+    MobLoes: 192.168.1.111
+    XBox: 192.168.1.109
+    MobWouter: 192.168.1.153
+    SamsungTV: 192.168.1.111

@@ -1,0 +1,241 @@
+- id: '1534424392670'
+  alias: Lampen aan bij zonsondergang
+  trigger:
+  - event: sunset
+    offset: "00:45:00"
+    platform: sun
+  action:
+  - entity_id: switch.lampje
+    service: switch.turn_on
+  - delay: 00:00:{{ (range(1, 59)|random|int) }}
+  - entity_id: switch.halogeen
+    service: switch.turn_on
+  - delay: 00:00:{{ (range(1, 59)|random|int) }}
+  - entity_id: switch.ikealamp
+    service: switch.turn_on
+- id: '1536320685610'
+  alias: Lampen aan bij Opstaan
+  trigger:
+  - at: 06:44
+    platform: time
+  condition:
+  - before: sunrise
+    condition: sun
+    after_offset: -00:00:15
+  action:
+  - entity_id: switch.lampje
+    service: switch.turn_on
+  - delay: 00:00:{{ (range(1, 59)|random|int) }}
+  - entity_id: switch.halogeen
+    service: switch.turn_on
+  - delay: 00:00:{{ (range(1, 59)|random|int) }}
+  - entity_id: switch.ikealamp
+    service: switch.turn_on
+- id: '1536328704662'
+  alias: Lampen uit na zonsopgang
+  trigger:
+  - event: sunrise
+    offset: 00:30:00
+    platform: sun
+  condition: []
+  action:
+  - entity_id: switch.lampje
+    service: switch.turn_off
+  - entity_id: switch.halogeen
+    service: switch.turn_off
+  - entity_id: switch.ikealamp
+    service: switch.turn_off
+- id: '1536328704666'
+  alias: test_multiple
+  trigger:
+  - platform: webhook
+    webhook_id: '123456'
+  action:
+  - entity_id: switch.lampje
+    service: switch.turn_on
+  - delay: 00:00:01
+  - entity_id: switch.halogeen
+    service: switch.turn_on
+  - delay: 00:00:01
+  - entity_id: switch.ikealamp
+    service: switch.turn_on
+- id: '1536328704999'
+  alias: Rob left CZ
+  trigger:
+    platform: zone
+    event: leave
+    zone: zone.cz
+    entity_id: device_tracker.homeassist_s5_rob
+  action:
+    service: tts.google_say
+    entity_id: media_player.huiskamer
+    data_template:
+      message: 'Hi there, Rob has left from work at  {{ states(''sensor.time'') }}
+        and will be home in  {{ states(''sensor.tijd_naar_huis'') }} minutes.
+
+        '
+- id: '1536928938734'
+  alias: Motion Detected
+  trigger:
+  - entity_id: camera.motioneye_oprit
+    from: idle
+    platform: state
+    to: recording
+  condition: []
+  action:
+  - data:
+      entity_id: camera.upstairscamera
+      filename: /tmp/snapshot_{{ as_timestamp (now()) | timestamp_custom('%I_%M')
+        }}.jpg
+    service: camera.snapshot
+  - data:
+      message: Beweging gezien
+      title: Motion
+    service: notify.robstelefoon
+- id: '1538330820058'
+  alias: Naar bed
+  trigger:
+  - entity_id: media_player.mykodi
+    from: Aan
+    platform: state
+    to: Uit
+  condition:
+  - after: '22:00'
+    condition: time
+  action:
+  - entity_id: switch.lampje
+    service: switch.turn_off
+  - delay: 00:00:{{ (range(1, 59)|random|int) }}
+  - entity_id: switch.halogeen
+    service: switch.turn_off
+  - delay: 00:00:{{ (range(1, 59)|random|int) }}
+  - entity_id: switch.ikealamp
+    service: switch.turn_off
+  - delay: 00:00:{{ (range(1, 59)|random|int) }}
+  - entity_id: switch.printer
+    service: switch.turn_off
+- id: '1550341882012'
+  alias: Pompschakelaar aan
+  trigger:
+  - above: '33.5'
+    below: '60'
+    entity_id: sensor.vloer_temperatuur_temperature
+    platform: numeric_state
+  condition: []
+  action:
+    entity_id: switch.internetled
+    service: switch.turn_on
+- id: '1550341882013'
+  alias: Pompschakelaar uit
+  trigger:
+  - above: '0'
+    below: '33.5'
+    entity_id: sensor.vloer_temperatuur_temperature
+    platform: numeric_state
+  condition: []
+  action:
+    entity_id: switch.internetled
+    service: switch.turn_off
+- id: '1550751664900'
+  alias: Beweging detectie
+  trigger:
+  - entity_id: binary_sensor.oprit_motion
+    from: 'off'
+    platform: state
+    to: 'on'
+  action:
+  - data:
+      entity_id: camera.upstairscamera
+      filename: /tmp/snapshot_{{ as_timestamp (now()) | timestamp_custom('%I_%M')
+        }}.jpg
+    service: camera.snapshot
+  - delay: 00:00:02
+  - service: notify.robstelefoon
+    data_template:
+      message: Er is beweging op de oprit
+      title: Beweging op de oprit
+      data:
+        file: /tmp/snapshot_{{ as_timestamp (now()) | timestamp_custom('%I_%M') }}.jpg
+- id: '1556614739178'
+  alias: Woonkamer uit
+  trigger:
+  - at: '23:59:00'
+    platform: time
+  condition: []
+  action:
+  - data:
+      entity_id: group.all_lights
+    service: homeassistant.turn_off
+- id: '12312312345'
+  alias: Slow Down Turbo
+  trigger:
+    platform: numeric_state
+    entity_id: device_tracker.life360_rob
+    value_template: ‘{{ state.attributes.speed }}’
+    above: 135
+    for:
+      minutes: 1
+  action:
+    service: notify.robstelefoon
+    data:
+      title: “Speed Warning”
+      message: “Slow Down Turbo!”
+      data:
+        attachment:
+          url: “https://i.imgur.com/WRyZKEO.jpg”
+- id: '1536928938765999'
+  alias: Motion inside Detected
+  trigger:
+  - entity_id: camera.escam
+    from: idle
+    platform: state
+    to: recording
+  condition: []
+  action:
+  - data:
+      entity_id: camera.escam
+      filename: /tmp/snapshot1_{{ as_timestamp (now()) | timestamp_custom('%I_%M')
+        }}.jpg
+    service: camera.snapshot
+  - data:
+      message: Beweging gezien
+      title: Motion
+    service: notify.robstelefoon
+- id: '1565450812458'
+  alias: Wifi On
+  trigger:
+  - entity_id: device_tracker.mobberend
+    from: not_home
+    platform: state
+    to: home
+  - entity_id: device_tracker.mobrob
+    from: not_home
+    platform: state
+    to: home
+  condition: []
+  action:
+  - data:
+      entity_id: switch.internetled
+    service: switch.turn_on
+- id: '1565450812459'
+  alias: Wifi Off
+  trigger:
+  - entity_id: device_tracker.mobberend
+    from: home
+    platform: state
+    to: not_home
+  - entity_id: device_tracker.mobrob
+    from: home
+    platform: state
+    to: not_home
+  condition:
+  - condition: state
+    entity_id: device_tracker.mobberend
+    state: not_home
+  - condition: state
+    entity_id: device_tracker.mobrob
+    state: not_home
+  action:
+  - data:
+      entity_id: switch.internetled
+    service: switch.turn_off

@@ -1,0 +1,79 @@
+linkspeakersfromliving:
+  alias: Koppel vanuit de Woonkamer
+  sequence:
+    # This is written using the Script Syntax
+    - service: switch.turn_on
+      entity_id: switch.addkitchenclienttodomain
+    - service: switch.turn_on
+      entity_id: switch.addstudyclienttodomain      
+    - service: switch.turn_on
+      entity_id: switch.setlivingmaster
+    - service: switch.turn_on
+      entity_id: switch.startdistributionfromliving
+    - service: switch.turn_on
+      entity_id: switch.Audio_Sync
+
+    - service: notify.robstelefoon
+      data_template:
+        message: Yamaha speakers zijn gekoppeld met de woonkamer
+        title: Yamaha gekoppeld met woonkamer
+
+linkspeakersfromkitchen:
+  alias: Koppel vanuit de Keuken
+  sequence:
+    # This is written using the Script Syntax
+    - service: switch.turn_on
+      entity_id: switch.addlivingclienttodomain
+    - service: switch.turn_on
+      entity_id: switch.addstudyclienttodomain      
+    - service: switch.turn_on
+      entity_id: switch.setkitchenmaster
+    - service: switch.turn_on
+      entity_id: switch.startdistributionfromkitchen
+    - service: switch.turn_on
+      entity_id: switch.Audio_Sync
+
+    - service: notify.robstelefoon
+      data_template:
+        message: Yamaha speakers zijn gekoppeld met de keuken
+        title: Yamaha gekoppeld met keuken
+
+
+
+unlinkspeakersfromliving:
+  alias: Loskoppelen van woonkamer
+  sequence:
+    - service: switch.turn_on
+      entity_id: switch.unlinkliving
+    - service: switch.turn_on
+      entity_id: switch.Lip_Sync
+
+    - service: notify.robstelefoon
+      data_template:
+        message: Yamaha speakers zijn niet meer gekopeld vanuit de Woonkamer
+        title: Yamaha losgekoppeld
+
+unlinkspeakersfromkitchen:
+  alias: Loskoppelen van keuken
+  sequence:
+    - service: switch.turn_on
+      entity_id: switch.unlinkkitchen
+    - service: switch.turn_on
+      entity_id: switch.Lip_Sync
+
+    - service: notify.robstelefoon
+      data_template:
+        message: Yamaha speakers zijn niet meer gekoppeld vanuit de Keuken
+        title: Yamaha losgekoppeld
+    
+dabnextstation:
+  alias: DAB Volgende station
+  sequence:
+    - service: switch.turn_on
+      entity_id: switch.DabNextStation
+
+dabpreviousstation:
+  alias: DAB Vorige station
+  sequence:
+    - service: switch.turn_on
+      entity_id: switch.DabPreviousStation

@@ -1,0 +1,23 @@
+person.wouter:
+  icon: mdi:account-outline
+device_tracker.mobberend:
+  friendly_name: Mobiel Berend
+  icon: mdi:cellphone
+device_tracker.mobrob:
+  friendly_name: Mobiel Rob
+  icon: mdi:cellphone
+device_tracker.rob:
+  friendly_name: Rob
+  icon: mdi:laptop
+device_tracker.soundbar:
+  icon: mdi:volume-high
+device_tracker.horizonbox:
+  icon: mdi:library-video
+switch.printer:
+  icon: mdi:printer
+camera.upstairscamera:
+  friendly_name: OpritCamera
+device_tracker.life360_berend:
+  friendly_name: Locatie Berend
+device_tracker.life360_rob:
+  friendly_name: Locatie Rob

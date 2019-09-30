@@ -1,0 +1,6 @@
+woonkamer:
+  name: Woonkamer
+  entities:
+    - switch.Halogeen
+    - switch.lampje
+    - switch.ikealamp

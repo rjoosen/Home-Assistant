@@ -1,0 +1,198 @@
+- platform: pilight
+  switches:
+    Halogeen:
+      on_code:
+        protocol: impuls
+        systemcode: 26
+        programcode: 4
+        "on": 1
+      off_code:
+        protocol: impuls
+        systemcode: 26
+        programcode: 4
+        "off": 0
+      on_code_receive:
+        protocol: impuls
+        systemcode: 26
+        programcode: 4
+        state: "on"
+      off_code_receive:
+        protocol: impuls
+        systemcode: 26
+        programcode: 4
+        state: "off"         
+    Lampje:
+      on_code:
+        protocol: impuls
+        systemcode: 26
+        programcode: 1
+        "on": 1
+      off_code:
+        protocol: impuls
+        systemcode: 26
+        programcode: 1
+        "off": 0
+      on_code_receive:
+        protocol: impuls
+        systemcode: 26
+        programcode: 1
+        state: "on"
+      off_code_receive:
+        protocol: impuls
+        systemcode: 26
+        programcode: 1
+        state: "off"         
+    IkeaLamp:
+      on_code:
+        protocol: impuls
+        systemcode: 26
+        programcode: 2
+        "on": 1
+      off_code:
+        protocol: impuls
+        systemcode: 26
+        programcode: 2
+        "off": 0
+      on_code_receive:
+        protocol: impuls
+        systemcode: 26
+        programcode: 2
+        state: "on"
+      off_code_receive:
+        protocol: impuls
+        systemcode: 26
+        programcode: 2
+        state: "off" 
+    Kast Lamp:
+      on_code:
+        protocol: impuls
+        systemcode: 26
+        programcode: 16
+        "on": 1
+      off_code:
+        protocol: impuls
+        systemcode: 26
+        programcode: 16
+        "off": 0        
+      on_code_receive:
+        protocol: impuls
+        systemcode: 0
+        programcode: 16
+        state: "on"
+      off_code_receive:
+        protocol: impuls
+        systemcode: 0
+        programcode: 16
+        state: "off"
+    Printer:
+      on_code:
+        protocol: impuls
+        systemcode: 26
+        programcode: 8
+        "on": 1
+      off_code:
+        protocol: impuls
+        systemcode: 26
+        programcode: 8
+        "off": 0        
+      on_code_receive:
+        protocol: impuls
+        systemcode: 26
+        programcode: 8
+        state: "on"
+      off_code_receive:
+        protocol: impuls
+        systemcode: 26
+        programcode: 8
+        state: "off"
+    
+- platform: rpi_gpio
+  ports:
+    23: InternetLed
+    15: PushButton
+
+# - platform: rpi_rf
+#   gpio: 17
+#   switches:
+#     lampje_nieuw:
+#       code_on: 7849300
+#       code_off: 7849297, 783407, 7849311
+#       protocol: 0
+#     deurbel:
+#       code_on: 78752
+#       code_off: 78751
+#       protocol: 0
+#       signal_repetitions: 33
+# - platform: rest
+#   resource: http://192.168.1.117/YamahaExtendedControl/v1/main/setVolume?volume=down
+#   is_on_template: '{{ value_json.is_active }}'
+#   name: volume_down
+
+# - platform: rest
+#   name: addkitchenclienttodomain
+#   resource: http://192.168.1.108/YamahaExtendedControl/v1/dist/setClientInfo
+#   body_on: '{"group_id":"9A237BF5AB80ED3C7251DFF49825CA42", "zone":["main"]}'
+#   method: "POST"
+
+# - platform: rest
+#   name: addlivingclienttodomain
+#   resource: http://192.168.1.107/YamahaExtendedControl/v1/dist/setClientInfo
+#   body_on: '{"group_id":"9A237BF5AB80ED3C7251DFF49825CA42", "zone":["main"]}'
+#   method: "POST"
+
+
+# - platform: rest
+#   name: addstudyclienttodomain
+#   resource: http://192.168.1.109/YamahaExtendedControl/v1/dist/setClientInfo
+#   body_on: '{"group_id":"9A237BF5AB80ED3C7251DFF49825CA42", "zone":["main"]}'
+#   method: "POST"
+
+# - platform: rest
+#   name: setlivingmaster
+#   resource: http://192.168.1.107/YamahaExtendedControl/v1/dist/setServerInfo
+#   body_on: '{"group_id":"9A237BF5AB80ED3C7251DFF49825CA42","zone":"main","type":"add","client_list":["192.168.1.108", "192.168.1.109"]}'
+#   method: "POST"
+
+# - platform: rest
+#   name: setkitchenmaster
+#   resource: http://192.168.1.108/YamahaExtendedControl/v1/dist/setServerInfo
+#   body_on: '{"group_id":"9A237BF5AB80ED3C7251DFF49825CA42","zone":"main","type":"add","client_list":["192.168.1.107", "192.168.1.109"]}'
+#   method: "POST"
+
+# - platform: rest
+#   name: startdistributionfromliving
+#   resource: http://192.168.1.107/YamahaExtendedControl/v1/dist/startDistribution?num=0
+
+# - platform: rest
+#   name: startdistributionfromkitchen
+#   resource: http://192.168.1.108/YamahaExtendedControl/v1/dist/startDistribution?num=0
+
+
+# - platform: rest
+#   name: UnlinkLiving
+#   resource: http://192.168.1.107/YamahaExtendedControl/v1/dist/setServerInfo
+#   body_on: '{"group_id":"9A237BF5AB80ED3C7251DFF49825CA42","zone":"main","type":"remove","client_list":["192.168.1.108","192.168.1.109"]}'
+#   method: "POST"
+
+# - platform: rest
+#   name: UnlinkKitchen
+#   resource: http://192.168.1.108/YamahaExtendedControl/v1/dist/setServerInfo
+#   body_on: '{"group_id":"9A237BF5AB80ED3C7251DFF49825CA42","zone":"main","type":"remove","client_list":["192.168.1.107","192.168.1.109"]}'
+#   method: "POST"
+
+# - platform: rest
+#   name: DabNextStation
+#   resource: http://192.168.1.108/YamahaExtendedControl/v1/tuner/setDabService?dir=next
+
+# - platform: rest
+#   name: DabPreviousStation
+#   resource: http://192.168.1.108/YamahaExtendedControl/v1/tuner/setDabService?dir=next
+
+# - platform: rest
+#   name: Audio_Sync
+#   resource: http://192.168.1.107/YamahaExtendedControl/v1/main/setLinkAudioDelay?delay=audio_sync
+
+# - platform: rest
+#   name: Lip_Sync
+#   resource: http://192.168.1.107/YamahaExtendedControl/v1/main/setLinkAudioDelay?delay=lip_sync
+
